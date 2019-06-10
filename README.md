@@ -7,7 +7,7 @@
 > 4. 确保扫码后打开页面，并允许了相机的授权, 把相机对准下面的Maker（也就是这张图片）/ opening this page and allow camera authorizationinig to camera, using camera to this picture
 > 5. ![alt text](https://skadieyes.github.io/Banana-AR/maker/banana.png "bananaMaker")
 > 6. 现在你可以看到banana拉～/ now you can see the banana on your screen
-
+> 3. ![alt text](https://skadieyes.github.io/Banana-AR/img/banana.jpeg "bananaOnScreen")
 ## 实现/How to do it
 > 1. 项目主要依赖ar.js和three.js, ar.js基于增强显示的SDK-ARToolkit,是我们实现web-ar的基础，使得我们在浏览器上也可以使用相机跟踪和识别标记卡(maker), 计算摄像机和标记卡之间的位置，让我们能够把虚拟的事物覆盖到真实的标记卡上。three.js在此处的作用主要是识别maker后的显示，跟踪到maker后我们可以精确地将模型渲染到maker上。
 > 2. 所以第一步先引入ar.js和three.js/ import ar.js and three.js
