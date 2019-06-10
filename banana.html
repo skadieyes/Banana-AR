@@ -39,7 +39,7 @@
       map: texture
     });
     /** 
-     * arToolkit
+     * 引入arToolkit
      * **/
     var arToolkitSource = new THREEx.ArToolkitSource({
       // to read from the webcam
@@ -66,33 +66,27 @@
         arToolkitSource.copySizeTo(arToolkitContext.arController.canvas);
       }
     }
-    ////////////////////////////////////////////////////////////////////////////////
-    //          initialize arToolkitContext
-    ////////////////////////////////////////////////////////////////////////////////
 
-    // create atToolkitContext
+    // 创建arToolkitContext上下文环境
     var arToolkitContext = new THREEx.ArToolkitContext({
       cameraParametersUrl:
-        THREEx.ArToolkitContext.baseURL + "data/camera_para.dat",
+      THREEx.ArToolkitContext.baseURL + "data/camera_para.dat",
       detectionMode: "mono",
       maxDetectionRate: 30,
       canvasWidth: 80 * 3,
       canvasHeight: 60 * 3
     });
-    // initialize it
     arToolkitContext.init(function onCompleted() {
-      // copy projection matrix to camera
       camera.projectionMatrix.copy(arToolkitContext.getProjectionMatrix());
     });
-    // update artoolkit on every frame
     onRenderFcts.push(function () {
       if (arToolkitSource.ready === false) return;
       arToolkitContext.update(arToolkitSource.domElement);
     });
 
-    ////////////////////////////////////////////////////////////////////////////////
-    //          Create a ArMarkerControls
-    ////////////////////////////////////////////////////////////////////////////////
+    /** 
+     * 载入训练后的maker
+     * **/
 
     var markerRoot = new THREE.Group();
     scene.add(markerRoot);
@@ -102,7 +96,6 @@
       {
         type: "pattern",
         patternUrl: THREEx.ArToolkitContext.baseURL + "data/patt.banana2"
-        // patternUrl : THREEx.ArToolkitContext.baseURL + '../data/data/patt.kanji'
       }
     );
     // build a smoothedControls
@@ -116,11 +109,11 @@
     onRenderFcts.push(function (delta) {
       smoothedControls.update(markerRoot);
     });
-    //////////////////////////////////////////////////////////////////////////////////
-    //		add an object in the scene
-    //////////////////////////////////////////////////////////////////////////////////
+
+    /** 
+     * 把Mesh放入场景
+     * **/
     var arWorldRoot = smoothedRoot;
-    // add a torus knot
     var geometry = new THREE.CubeGeometry(1, 1, 1);
     var material = new THREE.MeshNormalMaterial({
       transparent: true,
@@ -155,9 +148,10 @@
     onRenderFcts.push(function () {
       mesh.rotation.y += 0.1;
     });
-    //////////////////////////////////////////////////////////////////////////////////
-    //		render the whole thing on the page
-    //////////////////////////////////////////////////////////////////////////////////
+    
+    /** 
+     * Render
+     * **/
     var stats = new Stats();
     document.body.appendChild(stats.dom);
     // render the scene
