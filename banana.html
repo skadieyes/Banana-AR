@@ -139,7 +139,6 @@
       var texture = THREE.ImageUtils.loadTexture("./mesh/Banana_01_DIFF.png");
       material.map = texture;
 
-      loadedMesh.children[0].material = material;
       loadedMesh.children.forEach(function (child) {
         child.material = material;
         child.geometry.computeFaceNormals();
