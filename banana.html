@@ -6,6 +6,7 @@
 <!-- three.js library -->
 <script src="./three.js/three.min.js"></script>
 <script src="./three.js/stats.min.js"></script>
+<script src="./three.js/ObjectLoader.js"></script>
 <!-- ar.js -->
 <script src="./ar/ar.js"></script>
 <script>
@@ -143,6 +144,26 @@
     mesh.position.y = 0.5;
     arWorldRoot.add(mesh);
 
+    var mesh;
+    var loader = new THREE.OBJLoader();
+    loader.load('./mesh/Banana_01_MESH.obj', function (loadedMesh) {
+      var material = new THREE.MeshLambertMaterial({ color: 0x5C3A21 });
+
+        // loadedMesh is a group of meshes. For
+        // each mesh set the material, and compute the information
+        // three.js needs for rendering.
+        loadedMesh.children.forEach(function (child) {
+          child.material = material;
+          child.geometry.computeFaceNormals();
+          child.geometry.computeVertexNormals();
+        });
+
+        mesh = loadedMesh;
+        loadedMesh.scale.set(10, 10, 10);
+        loadedMesh.position.y = 1;
+        loadedMesh.rotation.x = -0.3;
+      });
+    arWorldRoot.add(mesh);
     onRenderFcts.push(function() {
       mesh.rotation.x += 0.1;
     });
