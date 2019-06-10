@@ -4,9 +4,10 @@
   content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
 />
 <!-- three.js library -->
-<script src="./three.js/three.min.js"></script>
+<script src="./three.js/three.js"></script>
 <script src="./three.js/stats.min.js"></script>
 <script src="./three.js/OBJLoader.js"></script>
+
 <!-- ar.js -->
 <script src="./ar/ar.js"></script>
 <script>
@@ -45,6 +46,32 @@
     // Create a camera
     var camera = new THREE.Camera();
     scene.add(camera);
+
+       var bananaMesh;
+        var loader = new THREE.OBJLoader();
+        loader.load('./mesh/Banana_01_MESH.obj', function (loadedMesh) {
+          var material = new THREE.MeshLambertMaterial({ color: 0x5C3A21 });
+
+          // loadedMesh is a group of meshes. For
+          // each mesh set the material, and compute the information
+          // three.js needs for rendering.
+          loadedMesh.children.forEach(function (child) {
+            child.material = material;
+            child.geometry.computeFaceNormals();
+            child.geometry.computeVertexNormals();
+          });
+
+          bananaMesh = loadedMesh;
+          console.log(loadedMesh)
+          loadedMesh.scale.set(10, 10, 10);
+        //  loadedMesh.rotation.x = -0.3;
+        });
+        // scene.add(bananaMesh);
+        onRenderFcts.push(function () {
+         // bananaMesh.rotation.x += 0.1;
+        });
+
+    
     ////////////////////////////////////////////////////////////////////////////////
     //          handle arToolkitSource
     ////////////////////////////////////////////////////////////////////////////////
@@ -144,9 +171,9 @@
     mesh.position.y = 0.5;
     arWorldRoot.add(mesh);
 
-/*     var bananaMesh;
+/*    var bananaMesh;
    var loader = new THREE.OBJLoader();
-  loader.load('./mesh/Banana_01_MESH.obj', function (loadedMesh) {
+   loader.load('./mesh/Banana_01_MESH.obj', function (loadedMesh) {
     var material = new THREE.MeshLambertMaterial({ color: 0x5C3A21 });
 
     // loadedMesh is a group of meshes. For
