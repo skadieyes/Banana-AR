@@ -1,8 +1,5 @@
 <!DOCTYPE html>
-<meta
-  name="viewport"
-  content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
-/>
+<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 <!-- three.js library -->
 <script src="./three.js/three.js"></script>
 <script src="./three.js/stats.min.js"></script>
@@ -15,41 +12,35 @@
 </script>
 
 <body style="margin : 0px; overflow: hidden; font-family: Monospace;">
-  <div
-    style="position: absolute; top: 10px; width:100%; text-align: center; z-index: 1;"
-  >
+  <div style="position: absolute; top: 10px; width:100%; text-align: center; z-index: 1;">
   </div>
   <script>
-    //////////////////////////////////////////////////////////////////////////////////
-    //		Init
-    //////////////////////////////////////////////////////////////////////////////////
-    // init renderer
     var renderer = new THREE.WebGLRenderer({
-      // antialias	: true,
       alpha: true
     });
     renderer.setClearColor(new THREE.Color("lightgrey"), 0);
-    // renderer.setPixelRatio( 1/2 );
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.domElement.style.position = "absolute";
     renderer.domElement.style.top = "0px";
     renderer.domElement.style.left = "0px";
     document.body.appendChild(renderer.domElement);
-    // array of functions for the rendering loop
+
     var onRenderFcts = [];
-    // init scene and camera
     var scene = new THREE.Scene();
 
-    //////////////////////////////////////////////////////////////////////////////////
-    //		Initialize a basic camera
-    //////////////////////////////////////////////////////////////////////////////////
-    // Create a camera
+    // 相机
     var camera = new THREE.Camera();
     scene.add(camera);
-    
-    ////////////////////////////////////////////////////////////////////////////////
-    //          handle arToolkitSource
-    ////////////////////////////////////////////////////////////////////////////////
+    var texture = THREE.ImageUtils.loadTexture("./mesh/Banana_01_DIFF.png");
+    var mat = new THREE.MeshPhongMaterial({
+      transparent: true,
+      opacity: .8,
+      shading: THREE.FlatShading,
+      map: texture
+    });
+    /** 
+     * arToolkit
+     * **/
     var arToolkitSource = new THREEx.ArToolkitSource({
       // to read from the webcam
       sourceType: "webcam"
@@ -65,7 +56,7 @@
     });
 
     // handle resize
-    window.addEventListener("resize", function() {
+    window.addEventListener("resize", function () {
       onResize();
     });
     function onResize() {
@@ -94,7 +85,7 @@
       camera.projectionMatrix.copy(arToolkitContext.getProjectionMatrix());
     });
     // update artoolkit on every frame
-    onRenderFcts.push(function() {
+    onRenderFcts.push(function () {
       if (arToolkitSource.ready === false) return;
       arToolkitContext.update(arToolkitSource.domElement);
     });
@@ -122,7 +113,7 @@
       lerpQuaternion: 0.3,
       lerpScale: 1
     });
-    onRenderFcts.push(function(delta) {
+    onRenderFcts.push(function (delta) {
       smoothedControls.update(markerRoot);
     });
     //////////////////////////////////////////////////////////////////////////////////
@@ -133,49 +124,45 @@
     var geometry = new THREE.CubeGeometry(1, 1, 1);
     var material = new THREE.MeshNormalMaterial({
       transparent: true,
-      opacity: 0.5,
+      opacity: 0,
       side: THREE.DoubleSide
     });
     var mesh = new THREE.Mesh(geometry, material);
     mesh.position.y = geometry.parameters.height / 2;
     arWorldRoot.add(mesh);
 
-    // var geometry = new THREE.TorusKnotGeometry(0.3, 0.1, 64, 16);
-    // var material = new THREE.MeshNormalMaterial();
-    // var mesh = new THREE.Mesh(geometry, material);
-    // mesh.position.y = 0.5;
-    // arWorldRoot.add(mesh);
-
     var bananaMesh;
     var loader = new THREE.OBJLoader();
     loader.load('./mesh/Banana_01_MESH.obj', function (loadedMesh) {
-        var material = new THREE.MeshLambertMaterial({ color: 0x5C3A21 });
+      var material = new THREE.MeshBasicMaterial({ color: 0xffffff });
+      loader.setMaterials(mat);
+      var texture = THREE.ImageUtils.loadTexture("./mesh/Banana_01_DIFF.png");
+      material.map = texture;
 
-          // loadedMesh is a group of meshes. For
-          // each mesh set the material, and compute the information
-          // three.js needs for rendering.
-          loadedMesh.children.forEach(function (child) {
-            child.material = material;
-            child.geometry.computeFaceNormals();
-            child.geometry.computeVertexNormals();
-          });
+      loadedMesh.children[0].material = material;
+      loadedMesh.children.forEach(function (child) {
+        child.material = material;
+        child.geometry.computeFaceNormals();
+        child.geometry.computeVertexNormals();
+      });
 
-          mesh = loadedMesh;
-          mesh.position.y = 2;
-          loadedMesh.scale.set(50, 50, 50);
-          //  loadedMesh.rotation.x = -0.3;
-        });
-        arWorldRoot.add(mesh);
-        onRenderFcts.push(function () {
-          // mesh.rotation.x += 0.1;
-        });
+      mesh = loadedMesh;
+      loadedMesh.position.y = 0.5;
+      arWorldRoot.add(loadedMesh);
+      loadedMesh.scale.set(10, 10, 10);
+      //  loadedMesh.rotation.x = -0.3;
+    });
+    arWorldRoot.add(mesh);
+    onRenderFcts.push(function () {
+      mesh.rotation.y += 0.1;
+    });
     //////////////////////////////////////////////////////////////////////////////////
     //		render the whole thing on the page
     //////////////////////////////////////////////////////////////////////////////////
     var stats = new Stats();
     document.body.appendChild(stats.dom);
     // render the scene
-    onRenderFcts.push(function() {
+    onRenderFcts.push(function () {
       renderer.render(scene, camera);
       stats.update();
     });
@@ -189,7 +176,7 @@
       var deltaMsec = Math.min(200, nowMsec - lastTimeMsec);
       lastTimeMsec = nowMsec;
       // call each update function
-      onRenderFcts.forEach(function(onRenderFct) {
+      onRenderFcts.forEach(function (onRenderFct) {
         onRenderFct(deltaMsec / 1000, nowMsec / 1000);
       });
     });
