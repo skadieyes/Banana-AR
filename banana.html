@@ -31,13 +31,6 @@
     // 相机
     var camera = new THREE.Camera();
     scene.add(camera);
-    var texture = THREE.ImageUtils.loadTexture("./mesh/Banana_01_DIFF.png");
-    var mat = new THREE.MeshPhongMaterial({
-      transparent: true,
-      opacity: .8,
-      shading: THREE.FlatShading,
-      map: texture
-    });
     /** 
      * 引入arToolkit
      * **/
