@@ -46,31 +46,6 @@
     // Create a camera
     var camera = new THREE.Camera();
     scene.add(camera);
-
-       var bananaMesh;
-        var loader = new THREE.OBJLoader();
-        loader.load('./mesh/Banana_01_MESH.obj', function (loadedMesh) {
-          var material = new THREE.MeshLambertMaterial({ color: 0x5C3A21 });
-
-          // loadedMesh is a group of meshes. For
-          // each mesh set the material, and compute the information
-          // three.js needs for rendering.
-          loadedMesh.children.forEach(function (child) {
-            child.material = material;
-            child.geometry.computeFaceNormals();
-            child.geometry.computeVertexNormals();
-          });
-
-          bananaMesh = loadedMesh;
-          console.log(loadedMesh)
-          loadedMesh.scale.set(10, 10, 10);
-        //  loadedMesh.rotation.x = -0.3;
-        });
-        // scene.add(bananaMesh);
-        onRenderFcts.push(function () {
-         // bananaMesh.rotation.x += 0.1;
-        });
-
     
     ////////////////////////////////////////////////////////////////////////////////
     //          handle arToolkitSource
@@ -171,28 +146,28 @@
     mesh.position.y = 0.5;
     arWorldRoot.add(mesh);
 
-/*    var bananaMesh;
-   var loader = new THREE.OBJLoader();
-   loader.load('./mesh/Banana_01_MESH.obj', function (loadedMesh) {
-    var material = new THREE.MeshLambertMaterial({ color: 0x5C3A21 });
+    var bananaMesh;
+    var loader = new THREE.OBJLoader();
+    loader.load('./mesh/Banana_01_MESH.obj', function (loadedMesh) {
+        var material = new THREE.MeshLambertMaterial({ color: 0x5C3A21 });
 
-    // loadedMesh is a group of meshes. For
-    // each mesh set the material, and compute the information
-    // three.js needs for rendering.
-    loadedMesh.children.forEach(function (child) {
-      child.material = material;
-      child.geometry.computeFaceNormals();
-      child.geometry.computeVertexNormals();
-    });
+          // loadedMesh is a group of meshes. For
+          // each mesh set the material, and compute the information
+          // three.js needs for rendering.
+          loadedMesh.children.forEach(function (child) {
+            child.material = material;
+            child.geometry.computeFaceNormals();
+            child.geometry.computeVertexNormals();
+          });
 
-    bananaMesh = loadedMesh;
-    loadedMesh.scale.set(10, 10, 10);
-    loadedMesh.rotation.x = -0.3;
-  });
-    arWorldRoot.add(bananaMesh); 
-    onRenderFcts.push(function() {
-      bananaMesh.rotation.x += 0.1;
-    }); */
+          mesh = loadedMesh;
+          loadedMesh.scale.set(10, 10, 10);
+          //  loadedMesh.rotation.x = -0.3;
+        });
+        arWorldRoot.add(mesh);
+        onRenderFcts.push(function () {
+          // mesh.rotation.x += 0.1;
+        });
     //////////////////////////////////////////////////////////////////////////////////
     //		render the whole thing on the page
     //////////////////////////////////////////////////////////////////////////////////
