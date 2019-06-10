@@ -140,10 +140,10 @@
     mesh.position.y = geometry.parameters.height / 2;
     arWorldRoot.add(mesh);
 
-    var geometry = new THREE.TorusKnotGeometry(0.3, 0.1, 64, 16);
-    var material = new THREE.MeshNormalMaterial();
-    var mesh = new THREE.Mesh(geometry, material);
-    mesh.position.y = 0.5;
+    // var geometry = new THREE.TorusKnotGeometry(0.3, 0.1, 64, 16);
+    // var material = new THREE.MeshNormalMaterial();
+    // var mesh = new THREE.Mesh(geometry, material);
+    // mesh.position.y = 0.5;
     // arWorldRoot.add(mesh);
 
     var bananaMesh;
@@ -161,7 +161,8 @@
           });
 
           mesh = loadedMesh;
-          loadedMesh.scale.set(10, 10, 10);
+          mesh.position.y = 2;
+          loadedMesh.scale.set(50, 50, 50);
           //  loadedMesh.rotation.x = -0.3;
         });
         arWorldRoot.add(mesh);
