@@ -2,7 +2,7 @@
 > 这是一个AR的demo/ This is a demo about ar run in web
 ## 预览/PreView
 > 1. 首先，打开你的手机, 确保你使用的浏览器支持WEBGL1.0和WebRTC平台, 安卓已支持谷歌浏览器,QQ和微信的内置浏览器, I0S系统需要版本11以上，使用系统自带扫码打开页面，在Sarari中运行, 需要注意的，IOS微信内置浏览器并不支持webRTC标准/Now, Openinig your phone please, you sholud make sure your Browser can support WEBGL1.0 and webRTC
-> 2. 扫码/Useing your phone's camera to sweep qrcode 
+> 2. 扫码/Useing your phone's camera to scan qrcode 
 > 3. ![alt text](https://skadieyes.github.io/Banana-AR/img/qrcode.png "qrCode")
 > 4. 确保扫码后打开页面，并允许了相机的授权, 把相机对准下面的Maker（也就是这张图片）/ opening this page and allow camera authorizationinig to camera, using camera to this picture
 > 5. ![alt text](https://skadieyes.github.io/Banana-AR/maker/banana.png "bananaMaker")
